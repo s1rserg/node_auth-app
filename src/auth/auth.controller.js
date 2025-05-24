@@ -13,7 +13,7 @@ const register = catchAsync(async (req, res) => {
 
   const user = await service.register({ name, email, password });
 
-  emailService.sendEmail({
+  await emailService.sendEmail({
     to: email,
     subject: 'Node App Authentication',
     text: `${process.env.HOST_ADDRESS}/auth/activate?email=${user.email}&token=${user.activationToken}`,
