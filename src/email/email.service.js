@@ -10,9 +10,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendEmail = ({ to, subject, text, html }) => {
+const sendEmail = async ({ to, subject, text, html }) => {
   try {
-    transporter.sendMail({
+    return await transporter.sendMail({
+      from: process.env.EMAIL_USER,
       to,
       subject,
       text,
@@ -20,7 +21,8 @@ const sendEmail = ({ to, subject, text, html }) => {
     });
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error(e);
+    console.error('Email sending failed:', e);
+    throw e;
   }
 };
 
