@@ -11,9 +11,9 @@ function createServer() {
 
   app.use(express.json());
 
-  app.use('/auth', authMiddleware, authRoutes);
+  app.use('/auth', authRoutes);
 
-  app.use('/users', userRoutes);
+  app.use('/users', authMiddleware, userRoutes);
 
   app.use(errorHandler);
 

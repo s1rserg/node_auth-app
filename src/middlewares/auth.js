@@ -10,15 +10,21 @@ const authMiddleware = (req, res, next) => {
 
   const token = authHeader.split(' ')[1];
 
+  let decoded;
+
   try {
-    const decoded = verify(token);
-
-    req.id = decoded.id;
-
-    next();
+    decoded = verify(token);
   } catch (err) {
     return next(new AppError('Invalid or expired token', 401));
   }
+
+  if (!decoded) {
+    return next(new AppError('Invalid or expired token', 401));
+  }
+
+  req.id = decoded.id;
+
+  next();
 };
 
 module.exports = { authMiddleware };

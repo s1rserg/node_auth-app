@@ -11,12 +11,17 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendEmail = ({ to, subject, text, html }) => {
-  transporter.sendMail({
-    to,
-    subject,
-    text,
-    html,
-  });
+  try {
+    transporter.sendMail({
+      to,
+      subject,
+      text,
+      html,
+    });
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
+  }
 };
 
 module.exports = {
